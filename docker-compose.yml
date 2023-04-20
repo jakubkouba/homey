@@ -1,0 +1,14 @@
+services:
+  db:
+    image: postgres:15.2-alpine
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: homey
+      POSTGRES_USER: homey
+    ports:
+      - "5433:5432"
+    volumes:
+      - "db-data:/var/lib/postgresql/data"
+
+volumes:
+  db-data:
