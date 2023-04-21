@@ -1,11 +1,11 @@
-<%= form_with(model: project) do |form| %>
+<%= form_with(model: project, id: 'project' ) do |form| %>
   <% if project.errors.any? %>
-    <div style="color: red">
+    <div style="color: red" data-test-validation-errors="true">
       <h2><%= pluralize(project.errors.count, "error") %> prohibited this project from being saved:</h2>
 
       <ul>
         <% project.errors.each do |error| %>
-          <li><%= error.full_message %></li>
+          <li data-error-<%= error.attribute %>="true"><%= error.full_message %></li>
         <% end %>
       </ul>
     </div>
@@ -27,6 +27,6 @@
   </div>
 
   <div>
-    <%= form.submit %>
+    <%= form.submit id: 'submit_project'  %>
   </div>
 <% end %>
