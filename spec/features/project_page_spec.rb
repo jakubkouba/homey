@@ -1,9 +1,24 @@
-feature 'Project page' do 
-  given(:project) { Project.create(title: 'House on the Abbey road', address: 'Abeby road 2 E23 5KL', description: 'Sellign house to the lovley youg couple') }
+describe 'Project page' do
+  context 'when project exists' do
+    let(:project) { create(:project, title: 'House on the Abbey road') }
   
-  scenario "When accessing project page" do
-    visit "/projects/#{project.id}"
+    before { visit "/projects/#{project.id}" }
 
-    expect(page).to have_content('House on the Abbey road')
+    it "display the project title" do
+      expect(page).to have_content('House on the Abbey road')
+    end
+  end
+
+  context 'when subniting form with empty title' do
+    before do
+      visit 'projects/new'
+      click_button('Create Project')
+    end
+      
+    it 'display an error' do
+      within('from#project-form') do
+        expect(page).to have_selector('li:data-error-title')
+      end
+    end
   end
 end
