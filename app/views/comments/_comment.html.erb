@@ -1,0 +1,23 @@
+<%= form_with(model: comment, id: 'comment' ) do |form| %>
+  <% if comment.errors.any? %>
+    <div style="color: red" data-test-validation-errors="true">
+      <h2><%= pluralize(project.errors.count, "error") %> prohibited this project from being saved:</h2>
+
+      <ul>
+        <% comment.errors.each do |error| %>
+          <li data-error-<%= error.attribute %>="true"><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= form.label 'Comment', style: "display: block" %>
+    <%= form.text_field :text %>
+    <%= form.hidden_field :project_id, value: @project.id %>
+  </div>
+
+  <div>
+    <%= form.submit id: 'submit_comment'  %>
+  </div>
+<% end %>

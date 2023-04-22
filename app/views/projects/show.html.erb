@@ -2,6 +2,16 @@
 
 <%= render @project %>
 
+<% if @project.comments.any? %>
+  <ul>
+    <% @project.comments.each do |comment| %>
+      <li><%= comment.text %></li>
+    <% end %>
+  </ul>
+<% end %>
+
+<%= render @comment %>
+
 <div>
   <%= link_to "Edit this project", edit_project_path(@project) %> |
   <%= link_to "Back to projects", projects_path %>
