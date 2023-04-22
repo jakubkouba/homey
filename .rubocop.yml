@@ -1,0 +1,8 @@
+require:
+  - rubocop-rspec
+  - rubocop-capybara
+  - rubocop-rails 
+
+AllCops:
+    NewCops: enable
+    TargetRubyVersion: 3.1
