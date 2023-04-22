@@ -3,5 +3,5 @@
 class Comment < ApplicationRecord
   belongs_to :project
 
-  validates :text, presence: true
+  validates :text, :project, presence: true
 end
