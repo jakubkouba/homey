@@ -5,7 +5,11 @@ class CommentsController < ApplicationController
     @comment = Comment.new(text:, project:)
 
     respond_to do |format|
-      format.html { redirect_to project_url(project) } if @comment.save
+      if @comment.save
+        format.html { redirect_to project_url(project) }
+      else
+        format.html { redirect_to project_url(project) }
+      end
     end
   end
 
