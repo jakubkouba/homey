@@ -5,3 +5,20 @@
 #
 #   movies = Movie.create([{ name: "Star Wars" }, { name: "Lord of the Rings" }])
 #   Character.create(name: "Luke", movie: movies.first)
+
+[
+  'open',
+  'money laundering passed',
+  'solicitor found',
+  'solicitor paid',
+  'memorandum created',
+  'rransaction form provided',
+  'enquiry in progress',
+  'mortgage report',
+  'documents signed',
+  'deposit paid',
+  'full amount paid',
+  'closed'
+].each do |state|
+  Status.create(title: state)
+end

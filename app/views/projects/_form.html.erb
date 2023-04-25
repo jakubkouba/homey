@@ -10,7 +10,7 @@
       </ul>
     </div>
   <% end %>
-
+ 
   <div>
     <%= form.label :title, style: "display: block" %>
     <%= form.text_field :title %>
@@ -24,6 +24,11 @@
   <div>
     <%= form.label :description, style: "display: block" %>
     <%= form.text_area :description %>
+  </div>
+
+  <div>
+    <%= form.label :status, style: "display: block" %>
+    <%= form.collection_select :status_id, Status.all, :id, :title %>
   </div>
 
   <div>

@@ -1,24 +1,16 @@
-require 'rails_helper'
+# frozen_string_literal: true
 
-RSpec.describe "projects/new", type: :view do
-  before(:each) do
-    assign(:project, Project.new(
-      title: "MyString",
-      address: "MyString",
-      description: "MyText"
-    ))
-  end
+RSpec.describe 'projects/new' do
+  before { assign(:project, Project.new) }
 
-  it "renders new project form" do
+  it 'renders new project form' do
     render
 
-    assert_select "form[action=?][method=?]", projects_path, "post" do
-
-      assert_select "input[name=?]", "project[title]"
-
-      assert_select "input[name=?]", "project[address]"
-
-      assert_select "textarea[name=?]", "project[description]"
+    expect(rendered).to have_tag('form', with: { action: '/projects', method: :post }) do
+      with_tag 'input', with: { name: 'project[title]' }
+      with_tag 'input', with: { name: 'project[address]' }
+      with_tag 'textarea', with: { name: 'project[description]' }
+      with_tag 'select', with: { name: 'project[status_id]' }
     end
   end
 end
