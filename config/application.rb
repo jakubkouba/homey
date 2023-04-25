@@ -34,5 +34,6 @@ module Homey
 
     # Don't generate system test files.
     config.generators.system_tests = nil
+    config.x.project.default_status_id = 1
   end
 end
