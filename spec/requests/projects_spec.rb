@@ -4,7 +4,7 @@ RSpec.describe '/projects' do
   # This should return the minimal set of attributes required to create a valid
   # Project. As you add validations to Project, be sure to
   # adjust the attributes here as well.
-  let(:valid_attributes) { build(:project).slice(:title, :address, :description) }
+  let(:valid_attributes) { build(:project).slice(:title, :address, :description, :status_id) }
 
   let(:invalid_attributes) do
     build(:project, title: 'A' * 101, address: '@$', description: 'Some description').slice(:title, :address,
@@ -71,21 +71,26 @@ RSpec.describe '/projects' do
   end
 
   describe 'PATCH /update' do
+    subject(:update_project) { patch project_url(project), params: { project: updated_project_params } }
+
+    let(:updated_project_params) { {} }
+    let(:status) { create(:status, title: 'Some status') }
+
     context 'with valid parameters' do
-      let(:new_attributes) do
-        skip('Add a hash of attributes valid for your model')
-      end
+      let(:aml_status) { create(:status, title: 'Money laudering passed') }
+      let(:project) { create(:project) }
+      let(:updated_project_params) { project.slice(:title, :address, :description).merge(status_id: aml_status.id) }
 
       it 'updates the requested project' do
-        project = Project.create! valid_attributes
-        patch project_url(project), params: { project: new_attributes }
+        update_project
+
         project.reload
-        skip('Add assertions for updated state')
+        expect(project.status_id).to eq(aml_status.id)
       end
 
       it 'redirects to the project' do
-        project = Project.create! valid_attributes
-        patch project_url(project), params: { project: new_attributes }
+        update_project
+
         project.reload
         expect(response).to redirect_to(project_url(project))
       end
