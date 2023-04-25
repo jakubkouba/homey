@@ -1,11 +1,13 @@
 <%= form_with(model: comment, id: 'comment' ) do |form| %>
-  <% if comment.errors.any? %>
-    <div style="color: red" data-test-validation-errors="true">
-      <h2><%= pluralize(project.errors.count, "error") %> prohibited this project from being saved:</h2>
+  <% if flash[:comment_errors] %>
+    <div style="color: red" data-test-validation-errors-comment="true">
+      <h2><%= pluralize(flash[:comment_errors].count, "error") %> prohibited this project from being saved:</h2>
 
       <ul>
-        <% comment.errors.each do |error| %>
-          <li data-error-<%= error.attribute %>="true"><%= error.full_message %></li>
+        <% flash[:comment_errors].each do |error| %>
+          <% field = error.first %>
+          <% errors = error.last %>
+          <li data-error-<%= field %>="true"><%= "#{field.capitalize} #{errors.first}" %></li>
         <% end %>
       </ul>
     </div>

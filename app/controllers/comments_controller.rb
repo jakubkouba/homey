@@ -1,15 +1,13 @@
 # frozen_string_literal: true
 
 class CommentsController < ApplicationController
+
   def create
     @comment = Comment.new(text:, project:)
 
     respond_to do |format|
-      if @comment.save
-        format.html { redirect_to project_url(project) }
-      else
-        format.html { redirect_to project_url(project) }
-      end
+      flash[:comment_errors] = @comment.errors unless @comment.save
+      format.html { redirect_to project_url(project) }
     end
   end
 

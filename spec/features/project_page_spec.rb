@@ -44,5 +44,18 @@ describe 'Project page' do
       expect(page).to have_current_path("/projects/#{project.id}")
       expect(page).to have_content('Some Text')
     end
+
+    context 'when comment is invalid' do
+      before { visit "/projects/#{project.id}" }
+
+      it 'displays errors' do
+        within('form#comment') do
+          click_button 'submit_comment'
+        end
+
+        expect(page).to have_current_path("/projects/#{project.id}")
+        expect(page).to have_css('div[data-test-validation-errors-comment="true"]')
+      end
+    end
   end
 end
