@@ -1,28 +1,18 @@
-require 'rails_helper'
+# frozen_string_literal: true
 
-RSpec.describe "projects/edit", type: :view do
-  let(:project) {
-    Project.create!(
-      title: "MyString",
-      address: "MyString",
-      description: "MyText"
-    )
-  }
+RSpec.describe 'projects/edit' do
+  let(:project) { create(:project) }
 
-  before(:each) do
-    assign(:project, project)
-  end
+  before { assign(:project, project) }
 
-  it "renders the edit project form" do
+  it 'renders the edit project form' do
     render
 
-    assert_select "form[action=?][method=?]", project_path(project), "post" do
-
-      assert_select "input[name=?]", "project[title]"
-
-      assert_select "input[name=?]", "project[address]"
-
-      assert_select "textarea[name=?]", "project[description]"
+    expect(rendered).to have_tag('form', with: { action: "/projects/#{project.id}", method: :post }) do
+      with_tag 'input', with: { name: 'project[title]' }
+      with_tag 'input', with: { name: 'project[address]' }
+      with_tag 'textarea', with: { name: 'project[description]' }
+      with_tag 'select', with: { name: 'project[status_id]' }
     end
   end
 end

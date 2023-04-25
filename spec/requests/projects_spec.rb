@@ -4,7 +4,10 @@ RSpec.describe '/projects' do
   # This should return the minimal set of attributes required to create a valid
   # Project. As you add validations to Project, be sure to
   # adjust the attributes here as well.
-  let(:valid_attributes) { build(:project).slice(:title, :address, :description, :status_id) }
+  let(:status) { create(:status) }
+  let(:project) { build(:project, status:) }
+
+  let(:valid_attributes) { project.slice(:title, :address, :description, :status_id) }
 
   let(:invalid_attributes) do
     build(:project, title: 'A' * 101, address: '@$', description: 'Some description').slice(:title, :address,
