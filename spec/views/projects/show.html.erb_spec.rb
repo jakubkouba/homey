@@ -1,7 +1,8 @@
 # frozen_string_literal: true
 
 RSpec.describe 'projects/show' do
-  let(:project) { create(:project, title: 'Title', address: 'Address', description: 'MyText') }
+  let(:project) { create(:project, title: 'Title', address: 'Address', description: 'MyText', status: status) }
+  let(:status) { create(:status, title: 'AML') }
 
   before do
     assign(:project, project)
@@ -13,6 +14,7 @@ RSpec.describe 'projects/show' do
     expect(rendered).to match(/Title/)
     expect(rendered).to match(/Address/)
     expect(rendered).to match(/MyText/)
+    expect(rendered).to match(/AML/)
   end
 
   it 'renders project with comment form' do
@@ -25,7 +27,7 @@ RSpec.describe 'projects/show' do
   end
 
   context 'when Project has a message' do
-    let(:project_with_comment) { create(:project) }
+    let(:project_with_comment) { create(:project, status: status) }
     let!(:comment) { create(:comment, text: 'Some message', project: project_with_comment) }
 
     before { assign(:project, project_with_comment) }
